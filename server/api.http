@@ -1,0 +1,48 @@
+POST http://localhost:3010/signup
+Content-Type: application/json
+
+{
+  "username": "testuser",
+  "password": "testpassword"
+}
+
+### Login with user credentials
+POST http://localhost:3010/login
+Content-Type: application/json
+
+{
+  "username": "testuser",
+  "password": "testpassword"
+}
+
+### Search movies by query
+POST http://localhost:3010/movies/search
+Content-Type: application/json
+
+{
+  "query": "Inception"
+}
+
+### Add a movie to favorites
+POST http://localhost:3010/favorites
+Content-Type: application/json
+Cookie: connect.sid=<SESSION_COOKIE>
+
+{
+  "user_id": 10,
+  "id": 27205
+}
+
+
+### Fetch favorite movies for logged-in user
+GET http://localhost:3010/favorites
+Content-Type: application/json
+Cookie: connect.sid=<SESSION_COOKIE> 
+
+
+
+### Logout the current user
+POST http://localhost:3010/logout
+Content-Type: application/json
+Cookie: connect.sid=<SESSION_COOKIE>
+

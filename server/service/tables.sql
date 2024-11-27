@@ -6,7 +6,7 @@ CREATE TABLE users (
 );
 -- Movies from TMBD
 CREATE TABLE movies (
-  movie_id INT PRIMARY KEY, 
+  id INT PRIMARY KEY, 
   title VARCHAR(255) NOT NULL,
   release_date DATE,
   overview TEXT,
