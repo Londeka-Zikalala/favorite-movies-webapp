@@ -32,8 +32,14 @@ app.use(session({
    }));
 
 app.use(flash());
+// Serve static files from the React app
+app.use(express.static(path.join(__dirname, 'client/build')));
 
 const routes = movieRoutes(favoriteMoviesDB);
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+});
 
 app.post('/movies/search', routes.searchMovies);
 app.get('/favorites', routes.listFavorites);

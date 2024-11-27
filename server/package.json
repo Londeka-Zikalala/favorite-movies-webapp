@@ -24,12 +24,15 @@
   },
   "contributors": [],
   "scripts": {
-    "dev": "",
-    "test": "mocha",
-    "start": "node server.js"
+    "client": "npm run start --prefix client",
+    "dev": "concurrently \"npm run client\" \"npm run server\"",
+    "build": "npm run build --prefix client && node server.js",
+    "start": "node index.js",
+    "test": "mocha"
   },
   "devDependencies": {
     "axios": "^1.7.7",
+    "concurrently": "^9.1.0",
     "mocha": "^10.8.2",
     "pg-promise": "^11.10.2"
   },
