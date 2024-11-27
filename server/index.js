@@ -5,8 +5,8 @@ import flash from 'connect-flash';
 import axios from 'axios';
 import cors from 'cors';
 import db from './db/db.js';
-import FavoriteMoviesDB from './service/FavoriteMovies.js';
-import movieRoutes from './routes/MoviesRoutes.js';
+import FavoriteMoviesDB from './server/service/FavoriteMovies.js';
+import movieRoutes from './server/routes/MoviesRoutes.js';
 
 
 const app = express();
