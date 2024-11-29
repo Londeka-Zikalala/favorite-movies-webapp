@@ -26,8 +26,8 @@
   "scripts": {
     "client": "npm run start --prefix client",
     "dev": "concurrently \"npm run client\" \"npm run server\"",
-    "build": "npm run build --prefix client && node server.js",
-    "start": "node index.js",
+    "build": "npm run build --prefix client && node server/index.js",
+    "start": "node server/index.js",
     "test": "mocha"
   },
   "devDependencies": {
