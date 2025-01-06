@@ -2,7 +2,7 @@ POST http://localhost:3010/signup
 Content-Type: application/json
 
 {
-  "username": "testuser",
+  "username": "testuser1",
   "password": "testpassword"
 }
 
@@ -11,10 +11,18 @@ POST http://localhost:3010/login
 Content-Type: application/json
 
 {
-  "username": "testuser",
+  "username": "testuser1",
   "password": "testpassword"
 }
 
+### Login with user credentials
+POST http://localhost:3010/login
+Content-Type: application/json
+
+{
+  "username": "Nandi",
+  "password": "Nandi1"
+}
 ### Search movies by query
 POST http://localhost:3010/movies/search
 Content-Type: application/json
@@ -26,23 +34,29 @@ Content-Type: application/json
 ### Add a movie to favorites
 POST http://localhost:3010/favorites
 Content-Type: application/json
-Cookie: connect.sid=<SESSION_COOKIE>
+Cookie: connect.sid=s%3AJpfYl_YfJcSmiDwSiW5ua7fPac58H6VZ.BbBPnF6jZhyCwMeXUNFKcjoEFZ0hz5tn4ih%2BPRmplvU
+
+{
+  "user_id": 10,
+  "id": 878
+}
+
+### Remove a movie from favorites
+POST http://localhost:3010/favorites/remove
+Content-Type: application/json
+Cookie: connect.sid=s%3AJpfYl_YfJcSmiDwSiW5ua7fPac58H6VZ.BbBPnF6jZhyCwMeXUNFKcjoEFZ0hz5tn4ih%2BPRmplvU
 
 {
   "user_id": 10,
   "id": 27205
 }
 
-
 ### Fetch favorite movies for logged-in user
 GET http://localhost:3010/favorites
 Content-Type: application/json
-Cookie: connect.sid=<SESSION_COOKIE> 
-
-
+Cookie: connect.sid=s%3AJpfYl_YfJcSmiDwSiW5ua7fPac58H6VZ.BbBPnF6jZhyCwMeXUNFKcjoEFZ0hz5tn4ih%2BPRmplvU
 
 ### Logout the current user
 POST http://localhost:3010/logout
 Content-Type: application/json
-Cookie: connect.sid=<SESSION_COOKIE>
-
+Cookie: connect.sid=s%3AJpfYl_YfJcSmiDwSiW5ua7fPac58H6VZ.BbBPnF6jZhyCwMeXUNFKcjoEFZ0hz5tn4ih%2BPRmplvU

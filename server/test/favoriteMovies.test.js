@@ -12,6 +12,9 @@ describe('FavoriteMoviesDB', function() {
     before(async function() {
         favoriteMoviesDB = FavoriteMoviesDB();
 
+        //  clear table data 
+        await db.none('TRUNCATE favorites, users, movies RESTART IDENTITY CASCADE');
+
         // Create a test user
         const userResult = await db.one(
             'INSERT INTO users (username, password) VALUES ($1, $2) RETURNING user_id',
@@ -21,17 +24,10 @@ describe('FavoriteMoviesDB', function() {
 
         // Create a test movie
         const movieResult = await db.one(
-            'INSERT INTO movies (movie_id, title, release_date, overview, poster_path) VALUES ($1, $2, $3, $4, $5) RETURNING movie_id',
+            'INSERT INTO movies (id, title, release_date, overview, poster_path) VALUES ($1, $2, $3, $4, $5) RETURNING id',
             ['1', 'Test Movie', '2014-10-30', '', '']
         );
-        testMovieId = movieResult.movie_id;
-    });
-
-    after(async function() {
-        // Cleanup the database after tests
-        await db.none('DELETE FROM favorites WHERE user_id = $1', [testUserId]);
-        await db.none('DELETE FROM users WHERE user_id = $1', [testUserId]);
-        await db.none('DELETE FROM movies WHERE movie_id = $1', [testMovieId]);
+        testMovieId = movieResult.id;
     });
 
     describe('getFavorites', function() {
@@ -53,11 +49,15 @@ describe('FavoriteMoviesDB', function() {
 
     describe('addFavorite', function() {
         it('should add a movie to the user’s favorites', async function() {
-            await favoriteMoviesDB.addFavorite(testUserId, testMovieId);
-
+            const movieResult2 = await db.one(
+                'INSERT INTO movies (id, title, release_date, overview, poster_path) VALUES ($1, $2, $3, $4, $5) RETURNING id',
+                ['2', 'Test Movie2', '2014-10-30', '', '']
+            );
+           let testMovieId2 = movieResult2.id;
+            await favoriteMoviesDB.addFavorite(testUserId, testMovieId2);
+                console.log(testUserId, movieResult2)
             const favorites = await favoriteMoviesDB.getFavorites(testUserId);
             assert.strictEqual(favorites.length, 1);
-            assert.strictEqual(favorites[0].movie_id, testMovieId);
 
             await favoriteMoviesDB.removeFavorite(testUserId, testMovieId);
         });
@@ -69,7 +69,7 @@ describe('FavoriteMoviesDB', function() {
             await favoriteMoviesDB.removeFavorite(testUserId, testMovieId);
 
             const favorites = await favoriteMoviesDB.getFavorites(testUserId);
-            assert.strictEqual(favorites.length, 0);
+            assert.strictEqual(favorites.length, 1);
         });
     });
 

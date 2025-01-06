@@ -15,6 +15,6 @@ CREATE TABLE movies (
 -- Favorite movies table
 CREATE TABLE favorites (
   user_id INT REFERENCES users(user_id) ON DELETE CASCADE,
-  movie_id INT REFERENCES movies(movie_id) ON DELETE CASCADE,
+  movie_id INT,
   PRIMARY KEY (user_id, movie_id)
 );

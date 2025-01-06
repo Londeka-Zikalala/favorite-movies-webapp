@@ -7,7 +7,7 @@ export default function FavoriteMoviesDB() {
   // Function to get user's favorite movies
   const getFavorites = async (userId) => {
     const result = await db.manyOrNone(
-      'SELECT movies.* FROM favorites JOIN movies ON favorites.id = movies.id WHERE favorites.user_id = $1',
+      `SELECT * FROM favorites WHERE favorites.user_id = $1`,
       [userId]
     );
     return result || [];
@@ -16,7 +16,7 @@ export default function FavoriteMoviesDB() {
   // Function to add a movie to favorites
   const addFavorite = async (userId, movieId) => {
     await db.none(
-      'INSERT INTO favorites (user_id, id) VALUES ($1, $2) ON CONFLICT DO NOTHING',
+      'INSERT INTO favorites (user_id, movie_id) VALUES ($1, $2) ON CONFLICT DO NOTHING',
       [userId, movieId]
     );
   };

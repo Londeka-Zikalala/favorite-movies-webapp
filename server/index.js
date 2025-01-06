@@ -6,7 +6,7 @@ import axios from 'axios';
 import cors from 'cors';
 import db from './db/db.js';
 import FavoriteMoviesDB from './service/FavoriteMovies.js';
-import movieRoutes from './routes/MoviesRoutes.js';
+import movieRoutes from './routes/moviesRoutes.js';
 
 
 const app = express();
@@ -36,9 +36,6 @@ app.use(flash());
 
 const routes = movieRoutes(favoriteMoviesDB);
 
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
-});
 
 app.post('/movies/search', routes.searchMovies);
 app.get('/favorites', routes.listFavorites);
