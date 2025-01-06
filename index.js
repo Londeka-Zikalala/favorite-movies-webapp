@@ -1,8 +1,5 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import session from 'express-session';
-import flash from 'connect-flash';
-import axios from 'axios';
 import cors from 'cors';
 import db from './db/db.js';
 import FavoriteMoviesDB from './service/FavoriteMovies.js';
@@ -19,19 +16,6 @@ app.use(cors());
 app.set('view engine', 'ejs');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(session({ 
-   secret: 'secret-key',
-   resave: false,
-   saveUninitialized: false,
-   cookie: {
-    secure: false,
-    httpOnly: true,
-    maxAge: 3600000,
-    sameSite: "lax"
-  }
-   }));
-
-app.use(flash());
 
 
 const routes = movieRoutes(favoriteMoviesDB);
