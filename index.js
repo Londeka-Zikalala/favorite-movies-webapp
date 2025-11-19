@@ -5,7 +5,7 @@ import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 import db from './db/db.js';
 import FavoriteMoviesDB from './service/FavoriteMovies.js';
-import movieRoutes from './routes/MoviesRoutes.js';
+import movieRoutes from './routes/moviesRoutes.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
