@@ -18,6 +18,68 @@ function movieRoutes(favoriteMoviesDB) {
     }
   }
 
+  function homeRoute(req, res) {
+    const endpoints = [
+      { 
+        method: 'POST', 
+        path: '/signup', 
+        description: 'Create a new user account', 
+        exampleBody: { username: 'testuser2', password: 'testpassword' },
+        requiresAuth: false
+      },
+      { 
+        method: 'POST', 
+        path: '/login', 
+        description: 'Login with user credentials and receive JWT token', 
+        exampleBody: { username: 'testuser1', password: 'testpassword' },
+        requiresAuth: false
+      },
+      { 
+        method: 'POST', 
+        path: '/logout', 
+        description: 'Logout the current user', 
+        exampleBody: {},
+        requiresAuth: true
+      },
+      { 
+        method: 'POST', 
+        path: '/movies/search', 
+        description: 'Search movies by query string', 
+        exampleBody: { query: 'Inception' },
+        requiresAuth: false
+      },
+      { 
+        method: 'GET', 
+        path: '/movies/popular', 
+        description: 'Get a list of popular movies', 
+        exampleBody: {},
+        requiresAuth: false
+      },
+      { 
+        method: 'GET', 
+        path: '/favorites', 
+        description: 'Fetch favorite movies for the logged-in user', 
+        exampleBody: {},
+        requiresAuth: true
+      },
+      { 
+        method: 'POST', 
+        path: '/favorites', 
+        description: 'Add a movie to favorites (user ID is extracted from JWT token)', 
+        exampleBody: { movieId: 878 },
+        requiresAuth: true
+      },
+      { 
+        method: 'POST', 
+        path: '/favorites/remove', 
+        description: 'Remove a movie from favorites (user ID is extracted from JWT token)', 
+        exampleBody: { movieId: 27205 },
+        requiresAuth: true
+      }
+    ];
+    res.render('index', { endpoints });
+  }
+
   // Popular movies
   async function popularMovies(req, res, next) {
     try {
@@ -162,7 +224,8 @@ function movieRoutes(favoriteMoviesDB) {
     signup,
     login,
     logout,
-    popularMovies
+    popularMovies,
+    homeRoute
   };
 }
 

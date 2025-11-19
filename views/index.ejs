@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Favorite Movies API Documentation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+            padding: 30px 0;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .endpoints-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .endpoint-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .endpoint-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+
+        .method-badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 0.85rem;
+            margin-right: 10px;
+            text-transform: uppercase;
+        }
+
+        .method-post {
+            background: #f59e0b;
+            color: white;
+        }
+
+        .method-get {
+            background: #10b981;
+            color: white;
+        }
+
+        .endpoint-path {
+            font-family: 'Courier New', monospace;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin: 15px 0;
+            word-break: break-all;
+        }
+
+        .endpoint-description {
+            color: #6b7280;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .example-section {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid #e5e7eb;
+        }
+
+        .example-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #9ca3af;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 10px;
+        }
+
+        .code-block {
+            background: #1f2937;
+            color: #f9fafb;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+            margin-top: 10px;
+            position: relative;
+        }
+
+        .code-block pre {
+            margin: 0;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.75rem;
+            transition: background 0.2s;
+        }
+
+        .copy-btn:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .copy-btn.copied {
+            background: #10b981;
+        }
+
+        .info-box {
+            background: rgba(255,255,255,0.95);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .info-box h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .info-box p {
+            color: #6b7280;
+            line-height: 1.8;
+        }
+
+        .base-url {
+            font-family: 'Courier New', monospace;
+            background: #f3f4f6;
+            padding: 3px 8px;
+            border-radius: 4px;
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .endpoints-grid {
+                grid-template-columns: 1fr;
+            }
+
+            header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎬 Favorite Movies API</h1>
+            <p>Interactive API Documentation</p>
+        </header>
+
+        <div class="info-box">
+            <h2>Base URL</h2>
+            <p>All endpoints are available at: <span class="base-url">http://localhost:3010</span></p>
+            <p style="margin-top: 10px;">For authenticated endpoints, include the JWT token in the Authorization header: <code style="background: #f3f4f6; padding: 2px 6px; border-radius: 3px;">Authorization: Bearer YOUR_TOKEN</code></p>
+        </div>
+
+        <div class="endpoints-grid">
+            <% endpoints.forEach(endpoint => { %>
+                <div class="endpoint-card">
+                    <div>
+                        <span class="method-badge method-<%= endpoint.method.toLowerCase() %>">
+                            <%= endpoint.method %>
+                        </span>
+                        <div class="endpoint-path"><%= endpoint.path %></div>
+                    </div>
+                    
+                    <div class="endpoint-description">
+                        <%= endpoint.description %>
+                    </div>
+
+                    <div class="example-section">
+                        <div class="example-label">Example Request</div>
+                        <div class="code-block">
+                            <button class="copy-btn" onclick="copyToClipboard(this, '<%= endpoint.method %>', '<%= endpoint.path %>', <%= JSON.stringify(endpoint.exampleBody) %>, <%= endpoint.requiresAuth %>)">Copy</button>
+                            <pre><%= endpoint.method %> <%= endpoint.path %>
+Content-Type: application/json
+<% if (endpoint.requiresAuth) { %>Authorization: Bearer YOUR_TOKEN
+<% } %>
+<%= JSON.stringify(endpoint.exampleBody, null, 2) %></pre>
+                        </div>
+                    </div>
+                </div>
+            <% }); %>
+        </div>
+    </div>
+
+    <script>
+        function copyToClipboard(button, method, path, body, requiresAuth) {
+            let requestText = `${method} http://localhost:3010${path}\n`;
+            requestText += `Content-Type: application/json\n`;
+            
+            if (requiresAuth) {
+                requestText += `Authorization: Bearer YOUR_TOKEN\n`;
+            }
+            
+            requestText += `\n${JSON.stringify(body, null, 2)}`;
+
+            navigator.clipboard.writeText(requestText).then(() => {
+                const originalText = button.textContent;
+                button.textContent = 'Copied!';
+                button.classList.add('copied');
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.classList.remove('copied');
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy:', err);
+                alert('Failed to copy to clipboard');
+            });
+        }
+    </script>
+</body>
+</html>
+
